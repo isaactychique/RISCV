@@ -1,5 +1,4 @@
 library IEEE;
-library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.numeric_std.all;
 
@@ -22,7 +21,7 @@ architecture arch of switch_ctrl is
 
   SIGNAL i_buffer  : STD_LOGIC_VECTOR(15 downto 0);
 
-  CONSTANT zero_local_addr : STD_LOGIC_VECTOR(13 downto 0) = "00000000000000";
+  CONSTANT zero_local_addr : STD_LOGIC_VECTOR(13 downto 0) := "00000000000000";
 
 begin
 

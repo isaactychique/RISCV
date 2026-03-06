@@ -19,7 +19,8 @@ set_property -dict {PACKAGE_PIN C17 IOSTANDARD LVCMOS33} [get_ports led0_r]
 ## Buttons
 #set_property -dict { PACKAGE_PIN A18   IOSTANDARD LVCMOS33 } [get_ports { btn[0] }]; #IO_L19N_T3_VREF_16 Sch=btn[0]
 #set_property -dict { PACKAGE_PIN B18   IOSTANDARD LVCMOS33 } [get_ports { btn[1] }]; #IO_L19P_T3_16 Sch=btn[1]
-set_property -dict {PACKAGE_PIN B18 IOSTANDARD LVCMOS33} [get_ports RESET_i]
+set_property -dict { PACKAGE_PIN A18 IOSTANDARD LVCMOS33 } [get_ports { RESET_i }];
+set_property -dict { PACKAGE_PIN B18 IOSTANDARD LVCMOS33 } [get_ports { USER_i  }]
 
 
 ## Pmod Header JA

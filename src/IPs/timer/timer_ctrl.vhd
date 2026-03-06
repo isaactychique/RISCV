@@ -35,7 +35,7 @@ architecture arch of timer_ctrl is
     end COMPONENT;
 
    SIGNAL cycle   : STD_LOGIC_VECTOR (31 downto 0);
-   SIGNAL instret : STD_LOGIC_VECTOR (31 downto 0);
+   SIGNAL timer_c : STD_LOGIC_VECTOR (31 downto 0);
 
    SIGNAL load_en : STD_LOGIC;
 
@@ -47,7 +47,8 @@ begin
         if rising_edge(clock) then
             case addr_lsb(3 downto 2) is
                 when "00"   => data_o <= cycle;
-                when OTHERS => data_o <= instret;
+                when "01"   => data_o <= timer_c;
+                when OTHERS => data_o <= timer_c;
             end case;
         end if;
     end process;
@@ -65,7 +66,7 @@ begin
         reset     => reset, 
         load_en   => load_en,
         data_i    => data_i,
-        counter_v => instret
+        counter_v => timer_c
     );
 
     load_en <= write_en when addr_lsb(3 downto 2) = "01" else '0';

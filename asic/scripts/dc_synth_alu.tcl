@@ -15,8 +15,8 @@ echo "link_library:      $link_library"
 echo "target_library:    $target_library"
 echo "symbol_library:    $symbol_library"
 
-analyze -library WORK -format vhdl { ../src/riscv_types.vhd }
-analyze -library WORK -format vhdl { ../src/alu.vhd         }
+analyze -library WORK -format vhdl { ../src/riscv/riscv_types.vhd }
+analyze -library WORK -format vhdl { ../src/riscv/alu/alu.vhd     }
 
 #	COMPILATION NORMALE
 
