@@ -28,6 +28,10 @@ build_riscv_nexys_a7_5stg:
 #
 #
 
+build_riscv_cmod_a7_2025:
+	rm -rf ./proj
+	vivado -mode batch -nolog -nojournal -source ./cmod_a7/cmod_a7_build.2025.2.tcl
+
 build_riscv_cmod_a7_2024:
 	rm -rf ./proj
 	vivado -mode batch -nolog -nojournal -source ./cmod_a7/cmod_a7_build.2024.2.tcl

@@ -8,7 +8,7 @@
 
 extern int get_cycles()
 {
-   volatile unsigned int* ptr_timer = 0x0C000000;
+   volatile unsigned int* ptr_timer = (unsigned int*)0x0C000000;
    return (*ptr_timer);
 }
 
@@ -19,34 +19,40 @@ int time()
 
 void sleep_cycles(const int cycles)
 {
-   volatile unsigned int* ptr_timer = 0x0C000000;
+   volatile unsigned int* ptr_timer = (unsigned int*)0x0C000000;
    ptr_timer[1] = cycles;
    while( ptr_timer[1] != 0 );
 }
 
-void sleep_us(const int cycles)
+void sleep_us(const int delay)
 {
-    sleep_cycles( 100 *  cycles);
+   const int freq     = get_soc_frequency() / 1000000;
+   const int cycles = freq * delay;
+   sleep_cycles( cycles );
 }
 
-void sleep_ms(const int cycles)
+void sleep_ms(const int delay)
 {
-    sleep_cycles( 100000 *  cycles);
+   const int freq     = get_soc_frequency() / 1000;
+   const int cycles = freq * delay;
+   sleep_cycles( cycles );
 }
 
-void sleep(const int cycles)
+void sleep(const int delay)
 {
-    sleep_cycles( 100000000 *  cycles);
+   const int freq     = get_soc_frequency();
+   const int cycles = freq * delay;
+   sleep_cycles( cycles );
 }
 
 void start_timer(const int cycles)
 {
-   volatile unsigned int* ptr_timer = 0x0C000000;
+   volatile unsigned int* ptr_timer = (unsigned int*)0x0C000000;
    ptr_timer[1] = cycles;
 }
 
-void is_timer_finished()
+int is_timer_finished()
 {
-   volatile unsigned int* ptr_timer = 0x0C000000;
+   volatile unsigned int* ptr_timer = (unsigned int*)0x0C000000;
    return (ptr_timer[1] == 0);
 }

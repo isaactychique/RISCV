@@ -20,7 +20,8 @@ architecture bench of riscv_soc_tb is
   Port ( 
       CLK_12MHz    : in  STD_LOGIC;
       RESET_i      : in  STD_LOGIC;
-      LED 		    : out STD_LOGIC_VECTOR (1 downto 0);
+--    LED 		    : out STD_LOGIC_VECTOR (1 downto 0);
+      LED 		    : out STD_LOGIC_VECTOR (7 downto 0);
 
       UART_RXD_OUT : out STD_LOGIC;
       UART_TXD_IN  : in  STD_LOGIC;
@@ -41,7 +42,8 @@ architecture bench of riscv_soc_tb is
 
   signal CLK_12MHz      : STD_LOGIC;
   signal RESET          : STD_LOGIC;
-  signal LED            : STD_LOGIC_VECTOR (1 downto 0);
+--signal LED            : STD_LOGIC_VECTOR (1 downto 0);
+  signal LED            : STD_LOGIC_VECTOR (7 downto 0);
   signal UART_RXD_OUT   : STD_LOGIC ; 
 
   constant clock_period : time := 10 ns;

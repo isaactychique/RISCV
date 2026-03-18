@@ -35,20 +35,21 @@ analysis:
 #	ghdl -a --std=08 -fsynopsys ../src/IPs/uart/uart_send.vhd
 	ghdl -a --std=08 -fsynopsys ../src/IPs/oled_rgb/pmodoledrgb_bitmap.vhd
 	ghdl -a --std=08 -fsynopsys ../src/IPs/led_rgb/pwm_module.vhd
-	ghdl -a --std=08 -fsynopsys ../src/IPs/led_rgb/led_rgb_ctrl.vhd
+	ghdl -a --std=08 -fsynopsys ../src/IPs/led_rgb/led_rgb_ctrl_nano20k.vhd
 	ghdl -a --std=08 -fsynopsys ../src/IPs/timer/cycle_cnt.vhd
 	ghdl -a --std=08 -fsynopsys ../src/IPs/timer/prog_cnt.vhd
 	ghdl -a --std=08 -fsynopsys ../src/IPs/timer/timer_ctrl.vhd
-	ghdl -a --std=08 -fsynopsys ../src/riscv/riscv_no_mem.vhd
+	ghdl -a --std=08 -fsynopsys ../src/IPs/timer/time_cnt.vhd
+	ghdl -a --std=08 -fsynopsys ../src/riscv/riscv.vhd
 	ghdl -a --std=08 -fsynopsys ../src/IPs/clock/fake/clk_wiz_0.vhd
-	ghdl -a --std=08 -fsynopsys ../src/soc/riscv_soc_20k.vhd
+	ghdl -a --std=08 -fsynopsys ../src/soc/riscv_soc_nano20k.vhd
 
 #
 # Synthese logique du design
 #
 synthesis: analysis
 	@echo "Logical syntesis (yosys)..."
-	yosys -m ghdl -p 'ghdl --std=08 -fsynopsys riscv_soc_20k; delete t:$$assert; synth_gowin -json ./top.json'
+	yosys -m ghdl -p 'ghdl --std=08 -fsynopsys riscv_soc_nano20k; delete t:$$assert; synth_gowin -json ./top.json'
 #	yosys -m ghdl -p 'ghdl --std=08 -fsynopsys riscv_soc_20k; delete t:$aassert; synth_gowin -json ./top.json'
 	@find . -name "*.o" -delete
 
@@ -68,7 +69,7 @@ par: synthesis
             --write ./pnr.json             \
         	--device GW2AR-LV18QN88C8/I7   \
            	--vopt   family=GW2A-18C       \
-			--top    riscv_soc_20k         \
+			--top    riscv_soc_nano20k     \
 			--freq   27                    \
        		--vopt   cst=./nano20k/tangnano20k.cst  \
 			--pre-pack ./nano20k/tangnano20k.py

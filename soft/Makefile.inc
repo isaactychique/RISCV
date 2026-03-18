@@ -1,8 +1,12 @@
-#RV_CCC = riscv64-linux-gnu-gcc
-#RV_AS  = riscv64-linux-gnu-as
-#RV_LD  = riscv64-linux-gnu-ld
-#RV_OBJ = riscv64-linux-gnu-objdump
+# MAC-OS
+#RV_GCC=riscv64-elf-gcc
+#RV_AS=riscv64-elf-as
+#RV_AR=riscv64-elf-ar
+#RV_LD=riscv64-elf-ld
+#RV_OBJ=riscv64-elf-objdump
+#RV_RANLIB=riscv64-elf-ranlib
 
+# LINUX
 RV_GCC=riscv64-linux-gnu-gcc-12
 RV_AS=riscv64-linux-gnu-as
 RV_AR=riscv64-linux-gnu-ar

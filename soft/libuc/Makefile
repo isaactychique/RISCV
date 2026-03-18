@@ -22,9 +22,11 @@ all: libuc.a
 
 libuc.a: 	obj/print.o        \
 			obj/printf.o       \
+			obj/clock.o        \
 			obj/led_rgb.o      \
 			obj/oled_screen.o  \
 			obj/timer.o        \
+			obj/information.o  \
 			obj/clz.o     \
 			obj/memcpy.o  \
 			obj/strcmp.o  \
@@ -87,6 +89,12 @@ obj/oled_screen.o : ./src/oled_screen.c
 
 obj/timer.o : ./src/timer.c
 	$(RV_GCC) $(CFLAGS) ./src/timer.c -c -o obj/timer.o $(PATH_L)
+
+ obj/information.o : src/information.c
+	$(RV_GCC) $(CFLAGS) ./src/information.c -c -o obj/information.o $(PATH_L)
+
+ obj/clock.o : src/clock.c
+	$(RV_GCC) $(CFLAGS) ./src/clock.c -c -o obj/clock.o $(PATH_L)
 
 clean:
 	rm -rf ./obj/*.o

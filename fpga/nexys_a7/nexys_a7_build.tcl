@@ -9,7 +9,7 @@
 # 
 # build settings
 # 
-set design_name "riscv_soc"
+set design_name "riscv_soc_nexys"
 set arch "xc7"
 set board_name "arty"
 set fpga_part "xc7a100tcsg324-1"
@@ -56,11 +56,12 @@ read_vhdl -vhdl2008 ../src/IPs/led_rgb/led_rgb_ctrl.vhd
 read_vhdl -vhdl2008 ../src/IPs/timer/cycle_cnt.vhd
 read_vhdl -vhdl2008 ../src/IPs/timer/prog_cnt.vhd
 read_vhdl -vhdl2008 ../src/IPs/timer/timer_ctrl.vhd
+read_vhdl -vhdl2008 ../src/IPs/timer/time_cnt.vhd
 
 read_vhdl -vhdl2008 ../src/IPs/clock/fake/clk_wiz_0.vhd
 
 read_vhdl -vhdl2008 ../src/riscv/riscv.vhd
-read_vhdl -vhdl2008 ../src/soc/riscv_soc.vhd
+read_vhdl -vhdl2008 ../src/soc/riscv_soc_nexys.vhd
 
 # read constraints
 #read_xdc "${origin_dir}/${arch}/${board_name}.xdc"

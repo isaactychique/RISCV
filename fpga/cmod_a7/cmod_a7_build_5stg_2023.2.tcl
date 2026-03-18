@@ -66,6 +66,7 @@ read_vhdl -vhdl2008 ../src/IPs/led_rgb/led_rgb_ctrl.vhd
 read_vhdl -vhdl2008 ../src/IPs/timer/cycle_cnt.vhd
 read_vhdl -vhdl2008 ../src/IPs/timer/prog_cnt.vhd
 read_vhdl -vhdl2008 ../src/IPs/timer/timer_ctrl.vhd
+read_vhdl -vhdl2008 ../src/IPs/timer/time_cnt.vhd
 
 read_vhdl -vhdl2008 ../src/riscv/riscv_5stg.vhd
 read_vhdl -vhdl2008 ../src/soc/riscv_5stg_soc.vhd

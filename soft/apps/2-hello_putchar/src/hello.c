@@ -3,9 +3,8 @@
  * Bertrand LE GAL (bertrand.le-gal@irisa.fr)
  * 
 */
-//#include <stdio.h>
 
-static inline int putchar(const int c)
+inline int putchar(const int c)
 {
    volatile unsigned int* uart_ou = (unsigned int*)0x06000000;
    ( *uart_ou ) = c;                            // on envoie le char

@@ -292,7 +292,7 @@ store_sim:
 #
 #
 #
-riscv:
+riscv_nexys:
 	# Nettoyage des anciens fichiers
 	find . -name "work-obj08.cf" -delete
 	find . -name "*.o"           -delete
@@ -307,7 +307,6 @@ riscv:
 
 	ghdl -a --std=08 -frelaxed ../src/riscv/riscv_types.vhd
 	ghdl -a --std=08 -frelaxed ../src/riscv/riscv_config.vhd
-	ghdl -a --std=08 -frelaxed ../src/observer.vhd
 
 	# les composants
 
@@ -370,12 +369,13 @@ riscv:
 	ghdl -a --std=08 -frelaxed ../src/IPs/timer/cycle_cnt.vhd
 	ghdl -a --std=08 -frelaxed ../src/IPs/timer/prog_cnt.vhd
 	ghdl -a --std=08 -frelaxed ../src/IPs/timer/timer_ctrl.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/time_cnt.vhd
 
 	# les composants
 
 	ghdl -a --std=08 -frelaxed ../src/riscv/riscv.vhd
-	ghdl -a --std=08 -frelaxed ../src/soc/riscv_soc.vhd
-	ghdl -a --std=08 -frelaxed ../testbench/riscv_soc_tb.vhd
+	ghdl -a --std=08 -frelaxed ../src/soc/riscv_soc_nexys.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/riscv_soc_nexys_a7_tb.vhd
 
 	# les composants
 
@@ -385,8 +385,323 @@ riscv:
 	find . -name "*.o"           -delete
 
 	# Simulation du modele RTL
-	#ghdl -r --std=08 -frelaxed riscv_soc_tb --ieee-asserts=disable --max-stack-alloc=0 --wave=riscv_soc_tb.ghw
-	ghdl -r --std=08 -frelaxed riscv_soc_tb --ieee-asserts=disable --max-stack-alloc=0
+	ghdl -r --std=08 -frelaxed riscv_soc_tb --ieee-asserts=disable --max-stack-alloc=0 --wave=riscv_soc_tb.ghw
+#
+#
+#
+#
+########################################################################################################################
+#
+#
+#
+#
+riscv_cmod:
+	# Nettoyage des anciens fichiers
+	find . -name "work-obj08.cf" -delete
+	find . -name "*.o"           -delete
+
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/strings_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/regexp_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/ctype_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/stdlib_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/stdio_h.vhdl
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/riscv_types.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/riscv_config.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/rom/mem_rom_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/rom/mem_rom.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_dp_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_dp.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/alu/alu_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/alu/alu.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/decode/decoder_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/decode/decoder.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/regs/registers_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/regs/registers.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/imm/immediate_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/imm/immediate.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/store/mem_store_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/store/mem_store.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/load/mem_load_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/load/mem_load.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/csr/cnt_cycles.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/csr/cnt_instr.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/csr/csr_registers.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/cycle_cnt.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/prog_cnt.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/timer_ctrl.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/time_cnt.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/fetch/fetch_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/fetch/fetch.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/IPs/spi/spi_master.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/spi/spi_master.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/uart_recv.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/uart_send.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/clk_wiz_0.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/pmodoledrgb_bitmap.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/pmodoledrgb_terminal.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/IPs/led_rgb/led_rgb_ctrl.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/led_rgb/pwm_module.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/IPs/oled_ring/ws2812b_ctrl.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/cycle_cnt.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/prog_cnt.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/timer_ctrl.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/time_cnt.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/riscv.vhd
+	ghdl -a --std=08 -frelaxed ../src/soc/riscv_soc_cmod.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/riscv_soc_cmod_a7_tb.vhd
+
+	# les composants
+
+	ghdl -e --std=08 -frelaxed riscv_soc_tb
+
+	# Nettoyage des anciens fichiers
+	find . -name "*.o"           -delete
+
+	# Simulation du modele RTL
+	ghdl -r --std=08 -frelaxed riscv_soc_tb --ieee-asserts=disable --max-stack-alloc=0 --wave=riscv_soc_tb.ghw
+#
+#
+#
+#
+########################################################################################################################
+#
+#
+#
+#
+riscv_nano20k:
+	# Nettoyage des anciens fichiers
+	find . -name "work-obj08.cf" -delete
+	find . -name "*.o"           -delete
+
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/strings_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/regexp_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/ctype_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/stdlib_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/stdio_h.vhdl
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/riscv_types.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/riscv_config.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/rom/mem_rom_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/rom/mem_rom.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_dp_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_dp.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/alu/alu_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/alu/alu.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/decode/decoder_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/decode/decoder.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/regs/registers_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/regs/registers.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/imm/immediate_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/imm/immediate.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/store/mem_store_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/store/mem_store.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/load/mem_load_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/load/mem_load.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/csr/cnt_cycles.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/csr/cnt_instr.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/csr/csr_registers.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/fetch/fetch_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/fetch/fetch.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/IPs/spi/spi_master.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/spi/spi_master.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/uart_recv_nano20k.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/uart_send_nano20k.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/clk_wiz_0.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/pmodoledrgb_bitmap.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/pmodoledrgb_terminal.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/IPs/led_rgb/led_rgb_ctrl_nano20k.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/led_rgb/pwm_module.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/cycle_cnt.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/prog_cnt.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/timer_ctrl.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/time_cnt.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/riscv.vhd
+	ghdl -a --std=08 -frelaxed ../src/soc/riscv_soc_nano20k.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/riscv_soc_nano20k_tb.vhd
+
+	# les composants
+
+	ghdl -e --std=08 -frelaxed riscv_soc_tb
+
+	# Nettoyage des anciens fichiers
+	find . -name "*.o"           -delete
+
+	# Simulation du modele RTL
+	ghdl -r --std=08 -frelaxed riscv_soc_tb --ieee-asserts=disable --max-stack-alloc=0 --wave=riscv_soc_tb.ghw
+#
+#
+#
+#
+########################################################################################################################
+#
+#
+#
+#
+riscv_altera:
+	# Nettoyage des anciens fichiers
+	find . -name "work-obj08.cf" -delete
+	find . -name "*.o"           -delete
+
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/strings_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/regexp_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/ctype_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/stdlib_h.vhdl
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/tools/stdio_h.vhdl
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/riscv_types.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/riscv_config.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/rom/mem_rom_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/rom/mem_rom.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_altera.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_dp_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_dp.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/alu/alu_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/alu/alu.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/decode/decoder_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/decode/decoder.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/regs/registers_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/regs/registers.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/imm/immediate_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/imm/immediate.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/store/mem_store_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/store/mem_store.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/load/mem_load_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/load/mem_load.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/csr/cnt_cycles.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/csr/cnt_instr.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/csr/csr_registers.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/fetch/fetch_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/fetch/fetch.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/IPs/spi/spi_master.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/spi/spi_master.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/uart_recv_nano20k.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/uart_send_nano20k.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/clk_wiz_0.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/pmodoledrgb_bitmap.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/fake_modules/pmodoledrgb_terminal.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/IPs/led_rgb/led_rgb_ctrl.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/led_rgb/pwm_module.vhd
+
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/cycle_cnt.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/prog_cnt.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/timer_ctrl.vhd
+	ghdl -a --std=08 -frelaxed ../src/IPs/timer/time_cnt.vhd
+
+	# les composants
+
+	ghdl -a --std=08 -frelaxed ../src/riscv/riscv.vhd
+	ghdl -a --std=08 -frelaxed ../src/soc/riscv_soc_altera.vhd
+	ghdl -a --std=08 -frelaxed ../testbench/riscv_soc_altera_tb.vhd
+
+	# les composants
+
+	ghdl -e --std=08 -frelaxed riscv_soc_tb
+
+	# Nettoyage des anciens fichiers
+	find . -name "*.o"           -delete
+
+	# Simulation du modele RTL
+	ghdl -r --std=08 -frelaxed riscv_soc_tb --ieee-asserts=disable --max-stack-alloc=0 --wave=riscv_soc_tb.ghw
 #
 #
 #
@@ -411,18 +726,17 @@ riscv_5stg:
 
 	ghdl -a --std=08 -frelaxed ../src/riscv/riscv_types.vhd
 	ghdl -a --std=08 -frelaxed ../src/riscv/riscv_config.vhd
-	ghdl -a --std=08 -frelaxed ../src/observer.vhd
 
 	# les composants
 
-	ghdl -a --std=08 -frelaxed ../src/riscv/rom/mem_rom.vhd
 	ghdl -a --std=08 -frelaxed ../src/riscv/rom/mem_rom_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/rom/mem_rom.vhd
 
-	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram.vhd     # useless
-	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_pkg.vhd # useless
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram.vhd
 
-	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_dp.vhd
 	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_dp_pkg.vhd
+	ghdl -a --std=08 -frelaxed ../src/riscv/ram/mem_ram_dp.vhd
 
 	ghdl -a --std=08 -frelaxed ../src/riscv/alu/alu.vhd
 	ghdl -a --std=08 -frelaxed ../src/riscv/alu/alu_pkg.vhd

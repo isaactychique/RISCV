@@ -79,17 +79,6 @@ architecture arch of riscv_5stg_soc is
         clk_out1 : out STD_LOGIC);
     end COMPONENT;
             
--- synthesis translate_off
-    COMPONENT observer is
-    Port (
-        clk    : in  STD_LOGIC;
-        reset  : in  STD_LOGIC;
-        dat_en : in  STD_LOGIC;
-        dat    : in  STD_LOGIC_VECTOR (7 downto 0)
-    );
-    end COMPONENT;
--- synthesis translate_on
-
     SIGNAL CLK_100MHz : STD_LOGIC;
     SIGNAL RESET      : STD_LOGIC;
     SIGNAL RESETN     : STD_LOGIC;

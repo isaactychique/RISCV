@@ -9,7 +9,8 @@
 # 
 # build settings
 # 
-set design_name "riscv_soc"
+set design_name "riscv_soc_cmod"
+set bitstr_name "riscv_soc"
 set arch "xc7"
 set board_name "arty"
 set fpga_part "xc7a35tcpg236-1"
@@ -52,13 +53,15 @@ read_vhdl -vhdl2008 ../src/IPs/uart/uart_send.vhd
 read_vhdl -vhdl2008 ../src/IPs/oled_rgb/pmodoledrgb_bitmap.vhd
 read_vhdl -vhdl2008 ../src/IPs/led_rgb/pwm_module.vhd
 read_vhdl -vhdl2008 ../src/IPs/led_rgb/led_rgb_ctrl.vhd
+read_vhdl -vhdl2008 ../src/IPs/oled_ring/ws2812b_ctrl.vhd
 
 read_vhdl -vhdl2008 ../src/IPs/timer/cycle_cnt.vhd
 read_vhdl -vhdl2008 ../src/IPs/timer/prog_cnt.vhd
 read_vhdl -vhdl2008 ../src/IPs/timer/timer_ctrl.vhd
+read_vhdl -vhdl2008 ../src/IPs/timer/time_cnt.vhd
 
 read_vhdl -vhdl2008 ../src/riscv/riscv.vhd
-read_vhdl -vhdl2008 ../src/soc/riscv_soc.vhd
+read_vhdl -vhdl2008 ../src/soc/riscv_soc_cmod.vhd
 
 #remove_files
 set_part ${fpga_part} 
@@ -87,4 +90,4 @@ route_design
 
 # write bitstream
 #write_bitstream -force "${origin_dir}/${arch}/${design_name}.bit"
-write_bitstream -force "${design_name}.bit"
+write_bitstream -force "${bitstr_name}.bit"

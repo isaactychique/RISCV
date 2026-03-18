@@ -4,7 +4,7 @@
  * 
 */
 
-//#include <stdio.h>
+extern int printf(const char *fmt,...);
 
 int main()
 {

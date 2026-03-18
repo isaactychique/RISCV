@@ -1,20 +1,11 @@
-//#include <femtostdlib.h>
 #include "../libuc.h"
 
 int putchar(const int c)
 {
-   volatile unsigned int* uart_ou = 0x06000000;
+   volatile unsigned int* uart_ou = (unsigned int*)0x06000000;
    while( (*uart_ou) == 0 );                    // on attend que l'uart soit ready
-   ( *uart_ou ) = c;                            // on envoie le char
+   (*uart_ou) = c;                            // on envoie le char
 }
-/*
-void putchar(const char c)
-{
-   volatile unsigned int* uart_ou = 0x400008;
-   ( *uart_ou ) = c;
-}
-*/
-/* print_dec, print_hex taken from picorv32 */
 
 void print_string(const char* s)
 {

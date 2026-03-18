@@ -15,8 +15,9 @@ use work.alu_pkg.all;
 use work.mem_load_pkg.all; 
 use work.mem_store_pkg.all;
 
+-- synthesis translate_off
 use std.env.finish; -- allows to stop the simulation on ebreak
-
+-- synthesis translate_on
 
 entity riscv is
 Port ( 
@@ -685,8 +686,10 @@ begin
    begin
      if rising_edge(clk) then
          if resetn = '1' and DE_isEBREAK = '1' then
+-- synthesis translate_off
             finish; -- stopping the simulation !
-            --assert false report "The program finished its execution normally !" severity failure;
+-- synthesis translate_on
+            assert false report "The program finished its execution normally !" severity failure;
          end if;
      end if;
    end process;

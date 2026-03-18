@@ -20,14 +20,14 @@ int set_12b_from_16b(const int color)
 
 void set_pixel(const int offset, const int color)
 {
-   volatile unsigned int* screen = 0x0B000000;
+   volatile unsigned int* screen = (unsigned int*)0x0B000000;
    volatile unsigned int* pixel  = screen + offset;
    ( *pixel ) = color;
 }
 
 void clear_screen()
 {
-   volatile unsigned int* screen = 0x0B000000;
+   volatile unsigned int* screen = (unsigned int*)0x0B000000;
    for(int i = 0; i < 64 * 96; i += 1)
    {
       screen[i] = 0x000;
