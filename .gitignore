@@ -81,3 +81,14 @@ simu/immediate_tb
 simu/mem_store_tb
 simu/mem_load_tb
 simu/registers_tb
+fpga/work-obj08.cf
+fpga/pack.fs
+simu/riscv_soc_tb
+fpga/riscv_soc_nexys.bit
+fpga/vivado_cmod_a7/vivado.jou
+fpga/vivado_cmod_a7/vivado.log
+simu/riscv_soc_tb
+simu/riscv_soc_tb.ghw
+simu/trace.ghw
+simu/riscv_5stg_soc_tb
+.DS_Store
