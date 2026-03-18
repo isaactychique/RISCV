@@ -11,20 +11,18 @@ end;
 
 architecture bench of riscv_soc_tb is
 
-  component riscv_soc
-    GENERIC(
-         uart_tx_en : INTEGER := 1;
-         uart_rx_en : INTEGER := 1;
-         termial_en : INTEGER := 0
-    ); 
-  Port ( 
+  component riscv_soc_cmod
+--    GENERIC(
+--         uart_tx_en : INTEGER := 1;
+--         uart_rx_en : INTEGER := 1;
+--         termial_en : INTEGER := 0
+--    ); 
+   Port ( 
       CLK_12MHz     : in  STD_LOGIC;
       RESET_i       : in  STD_LOGIC;
+      USER_i        : in  STD_LOGIC;
+      
       LED 		     : out STD_LOGIC_VECTOR ( 1 downto 0);
-
-      led0_b        : out STD_LOGIC;
-      led0_g        : out STD_LOGIC;
-      led0_r        : out STD_LOGIC;
 
       JA_PMOD_CS    : out STD_LOGIC;
       JA_PMOD_MOSI  : out STD_LOGIC;
@@ -34,6 +32,12 @@ architecture bench of riscv_soc_tb is
       JA_PMOD_VCCEN : out STD_LOGIC;
       JA_PMOD_EN    : out STD_LOGIC;
 
+      led0_b        : out STD_LOGIC;
+      led0_g        : out STD_LOGIC;
+      led0_r        : out STD_LOGIC;
+
+      ws2812b_pin   : out STD_LOGIC;
+
       UART_RXD_OUT  : out STD_LOGIC;
       UART_TXD_IN   : in  STD_LOGIC
    );
@@ -41,27 +45,28 @@ architecture bench of riscv_soc_tb is
 
   signal CLK100MHZ      : STD_LOGIC;
   signal RESET          : STD_LOGIC;
+  signal USER           : STD_LOGIC;
   signal LED            : STD_LOGIC_VECTOR (1 downto 0);
   signal UART_RXD_OUT   : STD_LOGIC ; 
+  signal ws2812b_pin    : STD_LOGIC;
 
   constant clock_period : time := 10 ns;
   signal stop_the_clock : boolean;
 
 begin
 
-
    ------------------------------------------------------------------------------------
 
-
-   uut: riscv_soc
-    GENERIC MAP(
-         uart_tx_en => 1,
-         uart_rx_en => 0,
-         termial_en => 1
-    )
+   uut: riscv_soc_cmod
+--    GENERIC MAP(
+--         uart_tx_en => 1,
+--         uart_rx_en => 0,
+--         termial_en => 1
+--    )
     port map (
         CLK_12MHz     => CLK100MHZ,
         RESET_i       => RESET,
+        USER_i        => USER,
         LED           => LED,
         UART_RXD_OUT  => UART_RXD_OUT,
         UART_TXD_IN   => '0',
@@ -70,6 +75,8 @@ begin
         led0_g        => open,
         led0_r        => open,
         
+        ws2812b_pin  => ws2812b_pin,
+
         JA_PMOD_CS    => open,
         JA_PMOD_MOSI  => open,
         JA_PMOD_SCK   => open,
@@ -79,9 +86,7 @@ begin
         JA_PMOD_EN    => open
     );
 
-
    ------------------------------------------------------------------------------------
-
 
    clocking: process
    begin
@@ -99,6 +104,7 @@ begin
    stimulus: process
    begin
       -- Put initialisation code here
+      USER  <= '1'; -- pour tester depuis le soft
       RESET <= '1';
       wait for 4 * clock_period;
 

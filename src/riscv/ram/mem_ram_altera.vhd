@@ -25,6 +25,7 @@ architecture arch of mem_ram is
 
 
 	SIGNAL memory : ram_type := (
+<<<<<<< Updated upstream
 		0 => (x"00", x"00", x"30", x"3a"),
 		1 => (x"00", x"00", x"00", x"00"),
 		2 => (x"00", x"20", x"2d", x"20"),
@@ -240,6 +241,8 @@ architecture arch of mem_ram is
 		212 => (x"00", x"00", x"65", x"74"),
 		213 => (x"4e", x"4b", x"4e", x"55"),
 		214 => (x"00", x"00", x"57", x"4f"),
+=======
+>>>>>>> Stashed changes
 		others => (others => x"00")
 	);
 

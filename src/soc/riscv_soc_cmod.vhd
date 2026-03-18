@@ -7,11 +7,14 @@ use work.mem_ram_pkg.all; -- RAM
 use work.mem_rom_pkg.all; -- ROM
 
 entity riscv_soc_cmod is
+<<<<<<< Updated upstream
 GENERIC(
 	uart_tx_en : INTEGER := 1;
 	uart_rx_en : INTEGER := 0;
 	termial_en : INTEGER := 1
 ); 
+=======
+>>>>>>> Stashed changes
 Port ( 
    CLK_12MHz     : in  STD_LOGIC;
    RESET_i       : in  STD_LOGIC;
@@ -40,7 +43,11 @@ end riscv_soc_cmod;
 
 architecture arch of riscv_soc_cmod is
 
+<<<<<<< Updated upstream
    CONSTANT OLED_BPP  : INTEGER := 16;
+=======
+    CONSTANT OLED_BPP  : INTEGER := 16;
+>>>>>>> Stashed changes
 
     COMPONENT riscv IS
     PORT ( 
@@ -59,7 +66,10 @@ architecture arch of riscv_soc_cmod is
     );
     END COMPONENT;
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
    ---------------------------------------------------------------------------------------------------
     
     COMPONENT uart_send is
@@ -77,6 +87,12 @@ architecture arch of riscv_soc_cmod is
                fifo_full  : out STD_LOGIC);
     end COMPONENT;
 
+<<<<<<< Updated upstream
+=======
+   ---------------------------------------------------------------------------------------------------
+    
+
+>>>>>>> Stashed changes
     COMPONENT UART_recv is
        Port ( clk    : in  STD_LOGIC;
               reset  : in  STD_LOGIC;
@@ -85,11 +101,17 @@ architecture arch of riscv_soc_cmod is
               dat_en : out STD_LOGIC);
     end COMPONENT;
 
+<<<<<<< Updated upstream
+=======
+   ---------------------------------------------------------------------------------------------------
+
+>>>>>>> Stashed changes
     COMPONENT clk_wiz_0 is
        Port (
         clk_in1  : in  STD_LOGIC;
         clk_out1 : out STD_LOGIC);
     end COMPONENT;
+<<<<<<< Updated upstream
             
 -- synthesis translate_off
     COMPONENT observer is
@@ -101,6 +123,26 @@ architecture arch of riscv_soc_cmod is
     );
     end COMPONENT;
 -- synthesis translate_on
+=======
+
+   ---------------------------------------------------------------------------------------------------
+
+   COMPONENT time_cnt is
+   Generic(
+      clock_freq : integer := 100000000
+   );
+   Port ( 
+      CLK       : in  STD_LOGIC;
+      reset     : in  STD_LOGIC;
+      index_v   : in  STD_LOGIC_VECTOR( 4 downto 0);
+      data_i    : in  STD_LOGIC_VECTOR(31 downto 0); -- données à écrire (GRB)
+      write_en  : in  STD_LOGIC;                      -- écriture couleur
+      data_o    : out STD_LOGIC_VECTOR(31 downto 0)
+    );
+   end COMPONENT; 
+
+   ---------------------------------------------------------------------------------------------------
+>>>>>>> Stashed changes
 
    COMPONENT ws2812b_ctrl is
    generic (
@@ -118,6 +160,10 @@ architecture arch of riscv_soc_cmod is
     );
    end COMPONENT;
 
+<<<<<<< Updated upstream
+=======
+   ---------------------------------------------------------------------------------------------------
+>>>>>>> Stashed changes
 
    SIGNAL im_addr     : STD_LOGIC_VECTOR (31 downto 0);
    SIGNAL im_rdata    : STD_LOGIC_VECTOR (31 downto 0);
@@ -130,10 +176,17 @@ architecture arch of riscv_soc_cmod is
    SIGNAL dm_rd       : STD_LOGIC;
    SIGNAL dm_wr       : STD_LOGIC;
 
+<<<<<<< Updated upstream
     SIGNAL CLK_100MHz : STD_LOGIC;
     SIGNAL RESET      : STD_LOGIC;
     SIGNAL RESETN     : STD_LOGIC;
     SIGNAL USER_BTN   : STD_LOGIC;
+=======
+   SIGNAL CLOCK : STD_LOGIC;
+   SIGNAL RESET      : STD_LOGIC;
+   SIGNAL RESETN     : STD_LOGIC;
+   SIGNAL USER_BTN   : STD_LOGIC;
+>>>>>>> Stashed changes
    
     SIGNAL IO_wordaddr  : STD_LOGIC_VECTOR (13 downto 0);
 
@@ -171,7 +224,11 @@ architecture arch of riscv_soc_cmod is
 	SIGNAL data_to_spi_en        : STD_LOGIC;
 	SIGNAL data_to_vga_en        : STD_LOGIC;
 	SIGNAL data_to_sdcart_en     : STD_LOGIC;
+<<<<<<< Updated upstream
 	SIGNAL data_to_ethernet_en   : STD_LOGIC;
+=======
+	SIGNAL data_to_RT_clk_en    : STD_LOGIC;
+>>>>>>> Stashed changes
 	SIGNAL data_to_oled_scr_en   : STD_LOGIC;
 	SIGNAL data_to_timer_en      : STD_LOGIC;
 	SIGNAL data_to_ledrgb_en     : STD_LOGIC;
@@ -185,12 +242,17 @@ architecture arch of riscv_soc_cmod is
 	SIGNAL data_to_spi_wen       : STD_LOGIC;
 	SIGNAL data_to_vga_wen       : STD_LOGIC;
 	SIGNAL data_to_sdcart_wen    : STD_LOGIC;
+<<<<<<< Updated upstream
 	SIGNAL data_to_ethernet_wen  : STD_LOGIC;
+=======
+	SIGNAL data_to_RT_clk_wen    : STD_LOGIC;
+>>>>>>> Stashed changes
 	SIGNAL data_to_oled_scr_wen  : STD_LOGIC;
 	SIGNAL data_to_timer_wen     : STD_LOGIC;
 	SIGNAL data_to_ledrgb_wen    : STD_LOGIC;
 	SIGNAL data_to_ring_led_wen  : STD_LOGIC;
 
+<<<<<<< Updated upstream
     SIGNAL d32b_from_leds       : STD_LOGIC_VECTOR (31 downto 0);
     SIGNAL d32b_from_swit       : STD_LOGIC_VECTOR (31 downto 0);
     SIGNAL d32b_from_btns       : STD_LOGIC_VECTOR (31 downto 0);
@@ -204,6 +266,21 @@ architecture arch of riscv_soc_cmod is
     SIGNAL d32b_from_led_rgb    : STD_LOGIC_VECTOR (31 downto 0); 
     SIGNAL d32b_from_ram        : STD_LOGIC_VECTOR (31 downto 0); 
     SIGNAL d32b_from_soc_id     : STD_LOGIC_VECTOR (31 downto 0);
+=======
+   SIGNAL d32b_from_leds       : STD_LOGIC_VECTOR (31 downto 0);
+   SIGNAL d32b_from_swit       : STD_LOGIC_VECTOR (31 downto 0);
+   SIGNAL d32b_from_btns       : STD_LOGIC_VECTOR (31 downto 0);
+   SIGNAL d32b_from_uart       : STD_LOGIC_VECTOR (31 downto 0);
+  SIGNAL d32b_from_spi        : STD_LOGIC_VECTOR (31 downto 0);
+  SIGNAL d32b_from_vga_buff   : STD_LOGIC_VECTOR (31 downto 0);
+  SIGNAL d32b_from_sd_card    : STD_LOGIC_VECTOR (31 downto 0);
+   SIGNAL d32b_from_RT_clk     : STD_LOGIC_VECTOR (31 downto 0);
+   SIGNAL d32b_from_oled_rgb   : STD_LOGIC_VECTOR (31 downto 0);
+   SIGNAL d32b_from_timer      : STD_LOGIC_VECTOR (31 downto 0);
+   SIGNAL d32b_from_led_rgb    : STD_LOGIC_VECTOR (31 downto 0); 
+   SIGNAL d32b_from_ram        : STD_LOGIC_VECTOR (31 downto 0); 
+   SIGNAL d32b_from_soc_id     : STD_LOGIC_VECTOR (31 downto 0);
+>>>>>>> Stashed changes
 
 begin
 
@@ -229,7 +306,11 @@ begin
    data_to_spi_en       <= '1' WHEN dm_addr(27 downto 24) = "0111" else '0'; -- 0x07
    data_to_vga_en       <= '1' WHEN dm_addr(27 downto 24) = "1000" else '0'; -- 0x08
    data_to_sdcart_en    <= '1' WHEN dm_addr(27 downto 24) = "1001" else '0'; -- 0x09
+<<<<<<< Updated upstream
    data_to_ethernet_en  <= '1' WHEN dm_addr(27 downto 24) = "1010" else '0'; -- 0x0A
+=======
+   data_to_RT_clk_en    <= '1' WHEN dm_addr(27 downto 24) = "1010" else '0'; -- 0x0A
+>>>>>>> Stashed changes
    data_to_oled_scr_en  <= '1' WHEN dm_addr(27 downto 24) = "1011" else '0'; -- 0x0B
    data_to_timer_en     <= '1' WHEN dm_addr(27 downto 24) = "1100" else '0'; -- 0x0C
    data_to_ledrgb_en    <= '1' WHEN dm_addr(27 downto 24) = "1101" else '0'; -- 0x0D
@@ -243,7 +324,11 @@ begin
    data_to_spi_wen      <= data_to_spi_en      and dm_wr;
    data_to_vga_wen      <= data_to_vga_en      and dm_wr;
    data_to_sdcart_wen   <= data_to_sdcart_en   and dm_wr;
+<<<<<<< Updated upstream
    data_to_ethernet_wen <= data_to_ethernet_en and dm_wr;
+=======
+   data_to_RT_clk_wen   <= data_to_RT_clk_en   and dm_wr;
+>>>>>>> Stashed changes
    data_to_oled_scr_wen <= data_to_oled_scr_en and dm_wr;
    data_to_timer_wen    <= data_to_timer_en    and dm_wr;
    data_to_ledrgb_wen   <= data_to_ledrgb_en   and dm_wr;
@@ -253,16 +338,26 @@ begin
 
    time_ctrl : ENTITY work.timer_ctrl
    PORT MAP(
+<<<<<<< Updated upstream
             clock     => CLK_100MHz,
             reset     => RESET,
             addr_lsb  => dm_addr(3 downto 0),
             data_i    => dm_wdata,
             data_o    => d32b_from_timer,
             write_en  => data_to_timer_wen
+=======
+      clock     => CLOCK,
+      reset     => RESET,
+      addr_lsb  => dm_addr(3 downto 0),
+      data_i    => dm_wdata,
+      data_o    => d32b_from_timer,
+      write_en  => data_to_timer_wen
+>>>>>>> Stashed changes
    );
 
    ---------------------------------------------------------------------------------------------------
 
+<<<<<<< Updated upstream
     led_rgb_1 : ENTITY work.led_rgb_ctrl
         PORT MAP(
             clock     => CLK_100MHz,
@@ -280,6 +375,39 @@ begin
    PROCESS(CLK_100MHz)
    BEGIN
       if rising_edge(CLK_100MHZ) then
+=======
+   horloge : time_cnt
+   GENERIC MAP( clock_freq => 100000000 ) -- 100 MHz
+   PORT MAP ( 
+      CLK       => CLOCK,
+      reset     => RESET,
+      index_v   => dm_addr(4 downto 0),
+      data_i    => dm_wdata,
+      write_en  => data_to_RT_clk_wen,
+      data_o    => d32b_from_RT_clk
+   );
+
+
+   ---------------------------------------------------------------------------------------------------
+
+    led_rgb_1 : ENTITY work.led_rgb_ctrl
+    PORT MAP(
+      clock     => CLOCK,
+      reset     => RESET,
+      data_i    => dm_wdata,
+      data_o    => d32b_from_led_rgb,
+      write_en  => data_to_ledrgb_wen,
+      led_r_o   => led0_r,
+      led_g_o   => led0_g,
+      led_b_o   => led0_b
+    );
+
+   ---------------------------------------------------------------------------------------------------
+
+   PROCESS(CLOCK)
+   BEGIN
+      if rising_edge(CLOCK) then
+>>>>>>> Stashed changes
          RESET  <=     RESET_i;
          RESETN <= NOT RESET_i;
       END IF;
@@ -287,9 +415,15 @@ begin
 
    ---------------------------------------------------------------------------------------------------
 
+<<<<<<< Updated upstream
    PROCESS(CLK_100MHz)
    BEGIN
       if rising_edge(CLK_100MHZ) then
+=======
+   PROCESS(CLOCK)
+   BEGIN
+      if rising_edge(CLOCK) then
+>>>>>>> Stashed changes
          d32b_from_btns  <=  x"0000000" & "000" & USER_i;
       END IF;
    END PROCESS;
@@ -299,14 +433,22 @@ begin
    clk_gen : clk_wiz_0
    PORT MAP(
       clk_in1  => CLK_12MHz,
+<<<<<<< Updated upstream
       clk_out1 => CLK_100MHz
+=======
+      clk_out1 => CLOCK
+>>>>>>> Stashed changes
    );
 
    ---------------------------------------------------------------------------------------------------
 
    CPU : riscv
    PORT MAP(
+<<<<<<< Updated upstream
       clk          => CLK_100MHZ,
+=======
+      clk          => CLOCK,
+>>>>>>> Stashed changes
       resetn       => RESETN,
       im_addr      => im_addr,
       im_rdata     => im_rdata,
@@ -326,7 +468,11 @@ begin
 
    prog_rom : mem_rom
    PORT MAP ( 
+<<<<<<< Updated upstream
        CLOCK  => CLK_100MHZ,
+=======
+       CLOCK  => CLOCK,
+>>>>>>> Stashed changes
        ENABLE => '1',
        ADDR_R => im_addr(ROM_ADDR-1 downto 0),
        DATA_O => im_rdata
@@ -336,7 +482,11 @@ begin
 
    data_ram : mem_ram
    PORT MAP( 
+<<<<<<< Updated upstream
       CLOCK   => CLK_100MHZ,
+=======
+      CLOCK   => CLOCK,
+>>>>>>> Stashed changes
       ADDR_RW => dm_addr(RAM_ADDR-1 downto 0),
       ENABLE  => data_to_ram_en,
       WRITE_M => dm_wmask_v,
@@ -350,18 +500,41 @@ begin
 
    ---------------------------------------------------------------------------------------------------
 
+<<<<<<< Updated upstream
    process(CLK_100MHZ)
    begin   
       if rising_edge(CLK_100MHZ) then
          IF RESET = '1' THEN
             leds_buffer <= "00";
+=======
+   process(CLOCK)
+   begin   
+      if rising_edge(CLOCK) then
+         IF RESET = '1' THEN
+            leds_buffer <= (others => '0');
+>>>>>>> Stashed changes
          ELSIF data_to_leds_wen = '1' then
             leds_buffer <= dm_wdata(1 downto 0);
          end if;
       end if;
    end process;
 
+<<<<<<< Updated upstream
    LED <= leds_buffer when RESET = '0' else "11";
+=======
+   ---------------------------------------------------------------------------------------------------
+
+   process(CLOCK)
+   begin   
+      if rising_edge(CLOCK) then
+         if RESET = '1' then
+            LED <= "11";
+         else
+            LED <= leds_buffer;
+         end if;
+      end if;
+   end process;
+>>>>>>> Stashed changes
 
    ---------------------------------------------------------------------------------------------------
 
@@ -378,7 +551,11 @@ begin
          asynch_fifo_full => True
       )
       PORT MAP(
+<<<<<<< Updated upstream
          clk_100MHz => CLK_100MHZ,
+=======
+         clk_100MHz => CLOCK,
+>>>>>>> Stashed changes
          reset      => reset,
          dat_en     => data_to_uart_wen,
          dat        => data_to_uart,
@@ -391,7 +568,11 @@ begin
    
    UART_r_custom : UART_recv
       PORT MAP(
+<<<<<<< Updated upstream
          clk        => CLK_100MHZ,
+=======
+         clk        => CLOCK,
+>>>>>>> Stashed changes
          reset      => reset,
          rx         => UART_TXD_IN,
          dat        => data_from_uart,
@@ -400,9 +581,15 @@ begin
       
    ---------------------------------------------------------
 
+<<<<<<< Updated upstream
    process(CLK_100MHZ)
    begin   
       if rising_edge(CLK_100MHZ) then
+=======
+   process(CLOCK)
+   begin   
+      if rising_edge(CLOCK) then
+>>>>>>> Stashed changes
         IF RESET = '1' THEN
            data_from_uart_b <= x"00";
            data_from_uart_s <= '0'; 
@@ -428,7 +615,11 @@ begin
                 GREYSCALE   => False,         -- color or greyscale ? (only for BPP>6)
                 LEFT_SIDE   => False)         -- True if the Pmod is on the left side of the board
         PORT MAP(
+<<<<<<< Updated upstream
             clk          => CLK_100MHZ,
+=======
+            clk          => CLOCK,
+>>>>>>> Stashed changes
             reset        => RESET,
           
             pix_write    => data_to_oled_scr_wen,
@@ -461,7 +652,11 @@ begin
         LED_COUNT => 113
    )
    PORT MAP (
+<<<<<<< Updated upstream
       clk       => CLK_100MHZ,
+=======
+      clk       => CLOCK,
+>>>>>>> Stashed changes
       reset_n   => RESETN,
       led_index => dm_addr(9 downto 2),
       color     => dm_wdata,
@@ -485,7 +680,10 @@ begin
     d32b_from_spi          <= (others => '0');
     d32b_from_vga_buff     <= (others => '0');
     d32b_from_sd_card      <= (others => '0');
+<<<<<<< Updated upstream
     d32b_from_ethernet     <= (others => '0');
+=======
+>>>>>>> Stashed changes
     d32b_from_oled_rgb     <= x"0000" & data_from_oled_rgb; -- OLED_BPP
     
     dm_rdata <= d32b_from_leds       when data_to_leds_en     = '1'
@@ -495,7 +693,11 @@ begin
             else d32b_from_spi       when data_to_spi_en      = '1'
             else d32b_from_vga_buff  when data_to_vga_en      = '1'
             else d32b_from_sd_card   when data_to_sdcart_en   = '1'
+<<<<<<< Updated upstream
             else d32b_from_ethernet  when data_to_ethernet_en = '1'
+=======
+            else d32b_from_RT_clk    when data_to_RT_clk_en = '1'
+>>>>>>> Stashed changes
             else d32b_from_oled_rgb  when data_to_oled_scr_en = '1'
             else d32b_from_timer     when data_to_timer_en    = '1'
             else d32b_from_led_rgb   when data_to_ledrgb_en   = '1'
