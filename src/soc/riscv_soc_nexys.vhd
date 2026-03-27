@@ -89,20 +89,6 @@ architecture arch of riscv_soc_nexys is
         clk_out1 : out STD_LOGIC);
     end COMPONENT;
             
-<<<<<<< Updated upstream
--- synthesis translate_off
-    COMPONENT observer is
-    Port (
-        clk    : in  STD_LOGIC;
-        reset  : in  STD_LOGIC;
-        dat_en : in  STD_LOGIC;
-        dat    : in  STD_LOGIC_VECTOR (7 downto 0)
-    );
-    end COMPONENT;
--- synthesis translate_on
-
-=======
->>>>>>> Stashed changes
    SIGNAL im_addr     : STD_LOGIC_VECTOR (31 downto 0);
    SIGNAL im_rdata    : STD_LOGIC_VECTOR (31 downto 0);
 
