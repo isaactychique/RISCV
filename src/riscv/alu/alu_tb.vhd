@@ -23,7 +23,6 @@ architecture bench of alu_tb is
      func7             : in  STD_LOGIC_VECTOR ( 6 downto 0);
      imm_v             : in  STD_LOGIC_VECTOR (31 downto 0);
      aluOut_v          : out STD_LOGIC_VECTOR (31 downto 0);
-     aluPlus_v         : out STD_LOGIC_VECTOR (31 downto 0);
      takeBranch        : out STD_LOGIC
    );
   end component;
@@ -38,7 +37,6 @@ architecture bench of alu_tb is
   signal func7             : STD_LOGIC_VECTOR ( 6 downto 0);
   signal imm_v             : STD_LOGIC_VECTOR (31 downto 0);
   signal aluOut_v          : STD_LOGIC_VECTOR (31 downto 0);
-  signal aluPlus_v         : STD_LOGIC_VECTOR (31 downto 0);
   signal takeBranch        : STD_LOGIC ;
 
 begin
@@ -53,7 +51,6 @@ begin
                       func7             => func7,
                       imm_v             => imm_v,
                       aluOut_v          => aluOut_v,
-                      aluPlus_v         => aluPlus_v,
                       takeBranch        => takeBranch );
 
   stimulus: process
@@ -79,7 +76,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"00000000" ) report "Test failed" severity error;
-    assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
   
     rs1_v             <= x"00000001";
@@ -87,7 +83,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"00000002" ) report "Test failed" severity error;
-    assert(aluPlus_v =  x"00000002" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     rs1_v             <= x"00000007";
@@ -95,7 +90,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"0000000A" ) report "Test failed" severity error;
-    assert(aluPlus_v =  x"0000000A" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     ------------------------------------------------------------------------
@@ -118,7 +112,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"00000000" ) report "Test failed" severity error;
-    assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
   
     rs1_v             <= x"00000001";
@@ -126,7 +119,6 @@ begin
     imm_v             <= x"00000001";
     wait for 10 ns;
     assert(aluOut_v  =  x"00000002" ) report "Test failed" severity error;
-    assert(aluPlus_v =  x"00000002" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     rs1_v             <= x"00000007";
@@ -134,7 +126,6 @@ begin
     imm_v             <= x"00000003";
     wait for 10 ns;
     assert(aluOut_v  =  x"0000000A" ) report "Test failed" severity error;
-    assert(aluPlus_v =  x"0000000A" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     ------------------------------------------------------------------------
@@ -157,7 +148,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"0f000f00" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
   
     rs1_v             <= x"0ff00ff0";
@@ -165,7 +155,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"00f000f0" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     rs1_v             <= x"00ff00ff";
@@ -173,7 +162,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"000f000f" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     rs1_v             <= x"f00ff00f";
@@ -181,7 +169,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"f000f000" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     ------------------------------------------------------------------------
@@ -204,7 +191,6 @@ begin
     imm_v             <= x"ff00ff00";
     wait for 10 ns;
     assert(aluOut_v  =  x"ff00ff00" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
   
     rs1_v             <= x"0ff00ff0";
@@ -212,7 +198,6 @@ begin
     imm_v             <= x"000000f0";
     wait for 10 ns;
     assert(aluOut_v  =  x"000000f0" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     rs1_v             <= x"00ff00ff";
@@ -220,7 +205,6 @@ begin
     imm_v             <= x"0000070f";
     wait for 10 ns;
     assert(aluOut_v  =  x"0000000f" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     rs1_v             <= x"f00ff00f";
@@ -228,7 +212,6 @@ begin
     imm_v             <= x"000000f0";
     wait for 10 ns;
     assert(aluOut_v  =  x"00000000" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     ------------------------------------------------------------------------
@@ -251,7 +234,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"ff0fff0f" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
   
     rs1_v             <= x"0ff00ff0";
@@ -259,7 +241,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"fff0fff0" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     rs1_v             <= x"00ff00ff";
@@ -267,7 +248,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"0fff0fff" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     rs1_v             <= x"f00ff00f";
@@ -275,7 +255,6 @@ begin
     imm_v             <= x"00000000";
     wait for 10 ns;
     assert(aluOut_v  =  x"f0fff0ff" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
 
@@ -299,7 +278,6 @@ begin
     imm_v             <= x"ffffff0f";
     wait for 10 ns;
     assert(aluOut_v  =  x"ffffff0f" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
   
     rs1_v             <= x"0ff00ff0";
@@ -307,7 +285,6 @@ begin
     imm_v             <= x"000000f0";
     wait for 10 ns;
     assert(aluOut_v  =  x"0ff00ff0" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     rs1_v             <= x"00ff00ff";
@@ -315,7 +292,6 @@ begin
     imm_v             <= x"0000070f";
     wait for 10 ns;
     assert(aluOut_v  =  x"00ff07ff" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     rs1_v             <= x"f00ff00f";
@@ -323,7 +299,6 @@ begin
     imm_v             <= x"000000f0";
     wait for 10 ns;
     assert(aluOut_v  =  x"f00ff0ff" ) report "Test failed" severity error;
---  assert(aluPlus_v =  x"00000000" ) report "Test failed" severity error;
 --  takeBranch        <= "";
 
     ------------------------------------------------------------------------

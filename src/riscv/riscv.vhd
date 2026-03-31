@@ -149,7 +149,6 @@ architecture arch of riscv is
        imm_v             : in STD_LOGIC_VECTOR (31 downto 0);
 
        aluOut_v          : out STD_LOGIC_VECTOR (31 downto 0);
-       aluPlus_v         : out STD_LOGIC_VECTOR (31 downto 0);
        takeBranch        : out STD_LOGIC
     );
     end COMPONENT;
@@ -528,7 +527,6 @@ begin
        func7             => DE_funct7,
        imm_v             => DE_imm,
        aluOut_v          => E_aluOut,
-       aluPlus_v         => E_aluPlus,
        takeBranch        => E_takeBranch
      );
    

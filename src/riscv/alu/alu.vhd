@@ -15,7 +15,6 @@ Port (
    imm_v             : in  STD_LOGIC_VECTOR (31 downto 0);  -- immediate value
 
    aluOut_v          : out STD_LOGIC_VECTOR (31 downto 0);  -- result of the ALU computation
-   aluPlus_v         : out STD_LOGIC_VECTOR (31 downto 0);  -- result of the adder (rs_1 + (rs_2 or imm)), fast path for address computation
    takeBranch        : out STD_LOGIC
  );
 end alu;

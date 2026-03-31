@@ -704,7 +704,6 @@ begin
       func3             => DE_funct3,
       imm_v             => DE_imm,
       aluOut_v          => E_aluOut_base,
-      aluPlus_v         => open,
       takeBranch        => E_takeBranch
    );
               

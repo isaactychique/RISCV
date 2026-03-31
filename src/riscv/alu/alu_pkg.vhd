@@ -17,7 +17,6 @@ package alu_pkg is
         imm_v             : in  STD_LOGIC_VECTOR (31 downto 0);
 
         aluOut_v          : out STD_LOGIC_VECTOR (31 downto 0);
-        aluPlus_v         : out STD_LOGIC_VECTOR (31 downto 0);
         takeBranch        : out STD_LOGIC
     );
     end COMPONENT;
