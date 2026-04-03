@@ -52,9 +52,44 @@ begin
   begin
   
     -- Put initialisation code here
+    RESET <= '1';
+    wait for 20 ns;
+    RESET <= '0';
+    wait for clock_period;
 
+    rs1_id <= "00000";
+    rs2_id <= "00000";
+    rd_id <= "00000";
+    rd_id_we <= '0';
+    data_rd <= (others => '0');
+    wait for clock_period;
+
+    assert(DATA_rs1 = x"00000000") report "Test failed (initial value of x0)" severity error;
 
     -- Put test bench stimulus code here
+    
+    -- Write to all registers
+    for i in 1 to 31 loop
+      rd_id <= std_logic_vector(to_unsigned(i, 5));
+      data_rd <= std_logic_vector(to_unsigned(i, 32));
+      rd_id_we <= '1';
+      wait for clock_period;
+    end loop;
+
+    -- we = 0
+    rd_id_we <= '0';
+    wait for clock_period;
+
+    -- Read back from all registers and check values
+    for i in 1 to 15 loop
+      rs1_id <= std_logic_vector(to_unsigned(i, 5));
+      rs2_id <= std_logic_vector(to_unsigned(i+1, 5));
+      wait for clock_period;
+      assert(DATA_rs1 = std_logic_vector(to_unsigned(i, 32))) report "Test failed (read back from x" & integer'image(i) & ")" severity error;
+      assert(DATA_rs2 = std_logic_vector(to_unsigned(i+1, 32))) report "Test failed (read back from x" & integer'image(i+1) & ")" severity error;
+    end loop;
+    
+
 
     stop_the_clock <= true;
     wait;
