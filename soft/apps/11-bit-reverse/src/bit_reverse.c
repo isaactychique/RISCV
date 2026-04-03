@@ -94,20 +94,6 @@ uint32_t __attribute__ ((noinline)) reverse_uint32_v3(uint32_t x)
     return x;
 }
 
-inline int custom_0(const int a, const int b) {
-    int res = 0;
-    //R-type instruction, funct7=0, funct3=0    , opcode=0x0b
-    //asm(".insn r 0x0b, 0, 0, %[result], %[val_a], %[val_b]"
-    //    :[result] "=r" (res)
-    //    :[val_a] "r" (a), [val_b] "r" (b));
-    asm(".insn r 0x33, 0, 0, %[result], %[val_a], %[val_b]"
-        :[result] "=r" (res)
-        :[val_a] "r" (a), [val_b] "r" (b));
-
-    return res;
-}
-
-
 #define custom_instr
 
 //
