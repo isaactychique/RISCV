@@ -12,11 +12,6 @@ end;
 architecture bench of riscv_soc_tb is
 
   component riscv_soc_cmod
---    GENERIC(
---         uart_tx_en : INTEGER := 1;
---         uart_rx_en : INTEGER := 1;
---         termial_en : INTEGER := 0
---    ); 
    Port ( 
       CLK_12MHz     : in  STD_LOGIC;
       RESET_i       : in  STD_LOGIC;
@@ -58,11 +53,6 @@ begin
    ------------------------------------------------------------------------------------
 
    uut: riscv_soc_cmod
---    GENERIC MAP(
---         uart_tx_en => 1,
---         uart_rx_en => 0,
---         termial_en => 1
---    )
     port map (
         CLK_12MHz     => CLK100MHZ,
         RESET_i       => RESET,
