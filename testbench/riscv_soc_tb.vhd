@@ -17,6 +17,8 @@ architecture bench of riscv_soc_tb is
          uart_rx_en : INTEGER := 1;
          termial_en : INTEGER := 0
     ); 
+
+    
   Port ( 
       CLK_12MHz    : in  STD_LOGIC;
       RESET_i      : in  STD_LOGIC;

@@ -451,6 +451,7 @@ begin
     assert rs2_o         = "10000"   report "rs2_o is not '10000' for OR instruction" severity error;
     assert rdId_o        = "10111"   report "rdId_o is not '10111' for OR instruction" severity error;
 
+    
     instr_i <= "00000000010100001110110110110011"; -- or x27, x1,  x5
     wait for 10 ns;
     assert isALUreg_o    = '1'       report "ALUreg_o is not '1' for OR instruction" severity error;

@@ -5,17 +5,17 @@ use IEEE.numeric_std.all;
 
 entity registers is
 Port ( 
-   CLOCK    : in   STD_LOGIC;
-
+   clock    : in   STD_LOGIC;
+  
    RS1_id   : IN   STD_LOGIC_VECTOR( 4 DOWNTO 0);
-   DATA_rs1 : OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
-
    RS2_id   : IN   STD_LOGIC_VECTOR( 4 DOWNTO 0);
-   DATA_rs2 : OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
 
-   RD_id    : IN   STD_LOGIC_VECTOR( 4 DOWNTO 0);
    RD_id_we : IN   STD_LOGIC;
-   DATA_rd  : IN   STD_LOGIC_VECTOR(31 DOWNTO 0)
+   RD_id    : IN   STD_LOGIC_VECTOR( 4 DOWNTO 0);
+   DATA_rd  : IN   STD_LOGIC_VECTOR(31 DOWNTO 0);
+
+   DATA_rs1 : OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
+   DATA_rs2 : OUT  STD_LOGIC_VECTOR(31 DOWNTO 0)
  );
 end registers;
 
@@ -39,16 +39,18 @@ architecture arch of registers is
 
 begin
 
-   --
-   --
-   --
-   --
-   --
-   --
-   --
-   --
-   --
+   process(clock)
+   begin 
+      if rising_edge(clock) then
+         if (RD_id_we = '1' and RD_id/="00000" ) then 
+            registerFile(to_integer(unsigned(RD_id))) <= DATA_rd; 
+         end if; 
+      end if; 
+   end process; 
+
+   DATA_rs1 <= (others =>'0') when RS1_id ="00000" else registerFile(to_integer(unsigned(RS1_id))); 
+   DATA_rs2 <= (others =>'0') when RS2_id ="00000" else registerFile(to_integer(unsigned(RS2_id))); 
+  
    
 end arch;
  
-

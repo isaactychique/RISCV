@@ -4,57 +4,294 @@ use IEEE.numeric_std.all;
 use std.textio.all;
 use ieee.std_logic_textio.all;
 
+use work.riscv_types.all;
 use work.riscv_config.all;
 
-entity mem_ram is
-    Port ( 
-        CLOCK   : IN  STD_LOGIC;
-        ADDR_RW : IN  STD_LOGIC_VECTOR(RAM_ADDR-1  DOWNTO 0);
-        ENABLE  : IN  STD_LOGIC;
-        WRITE_M : IN  STD_LOGIC_VECTOR(          3 DOWNTO 0);
-        DATA_W  : IN  STD_LOGIC_VECTOR(RAM_WIDTH-1 DOWNTO 0);
-        DATA_R  : OUT STD_LOGIC_VECTOR(RAM_WIDTH-1 DOWNTO 0)
-     );
+entity mem_ram is 
+	Port (
+		CLOCK   : IN  STD_LOGIC;
+		ADDR_RW : IN  STD_LOGIC_VECTOR(RAM_ADDR-1  DOWNTO 0);
+		ENABLE  : IN  STD_LOGIC;
+		WRITE_M : IN  STD_LOGIC_VECTOR(          3 DOWNTO 0);
+		DATA_W  : IN  STD_LOGIC_VECTOR(RAM_WIDTH-1 DOWNTO 0);
+		DATA_R  : OUT STD_LOGIC_VECTOR(RAM_WIDTH-1 DOWNTO 0)
+	);
 end mem_ram;
 
 
-architecture arch of mem_ram is 
+architecture arch of mem_ram is
 
-    TYPE   ram_type IS ARRAY (0 TO (RAM_DEPTH-1)) OF STD_LOGIC_VECTOR (RAM_WIDTH-1 DOWNTO 0);
+TYPE   ram_type IS ARRAY (0 TO (RAM_DEPTH-1)) OF STD_LOGIC_VECTOR (RAM_WIDTH-1 DOWNTO 0);
 
-   impure function InitRomFromFile(RamFileName : in string)
-      return ram_type is
-         file RamFile         : text open read_mode is RamFileName;
-         variable RamFileLine : line;
-         variable RAM         : ram_type;
-    begin
-        --REPORT "-- PROGRAM MEMORY RAM";
-        --REPORT "-- RAM_ADDR  = " & integer'image(RAM_ADDR);
-        --REPORT "-- RAM_DEPTH = " & integer'image(RAM_DEPTH);
-        --REPORT "-- RAM_WIDTH = " & integer'image(RAM_WIDTH);
-        --REPORT "-- RAM_FILE  = " & RAM_FILE;
-        for I in ram_type'range loop
-            readline(RamFile, RamFileLine);
-            hread(RamFileLine, RAM(I));
-        end loop;
-        --REPORT "-- FIN DE CHARGEMENT";
-        return RAM;
-   end function;
+	signal memory : ram_type := (
+		0 => x"20202020",
+		1 => x"20202020",
+		2 => x"20202020",
+		3 => x"76762020",
+		4 => x"76767676",
+		5 => x"76767676",
+		6 => x"76767676",
+		7 => x"76767676",
+		8 => x"76767676",
+		9 => x"76767676",
+		10 => x"76767676",
+		11 => x"000a7676",
+		12 => x"20202020",
+		13 => x"20202020",
+		14 => x"20202020",
+		15 => x"20202020",
+		16 => x"76762020",
+		17 => x"76767676",
+		18 => x"76767676",
+		19 => x"76767676",
+		20 => x"76767676",
+		21 => x"76767676",
+		22 => x"76767676",
+		23 => x"000a7676",
+		24 => x"72727272",
+		25 => x"72727272",
+		26 => x"72727272",
+		27 => x"20202072",
+		28 => x"20202020",
+		29 => x"76767676",
+		30 => x"76767676",
+		31 => x"76767676",
+		32 => x"76767676",
+		33 => x"76767676",
+		34 => x"76767676",
+		35 => x"000a7676",
+		36 => x"72727272",
+		37 => x"72727272",
+		38 => x"72727272",
+		39 => x"72727272",
+		40 => x"20202020",
+		41 => x"76762020",
+		42 => x"76767676",
+		43 => x"76767676",
+		44 => x"76767676",
+		45 => x"76767676",
+		46 => x"76767676",
+		47 => x"000a7676",
+		48 => x"72727272",
+		49 => x"72727272",
+		50 => x"72727272",
+		51 => x"72727272",
+		52 => x"20207272",
+		53 => x"76762020",
+		54 => x"76767676",
+		55 => x"76767676",
+		56 => x"76767676",
+		57 => x"76767676",
+		58 => x"76767676",
+		59 => x"000a7676",
+		60 => x"72727272",
+		61 => x"72727272",
+		62 => x"72727272",
+		63 => x"72727272",
+		64 => x"20202020",
+		65 => x"76762020",
+		66 => x"76767676",
+		67 => x"76767676",
+		68 => x"76767676",
+		69 => x"76767676",
+		70 => x"76767676",
+		71 => x"000a2020",
+		72 => x"72727272",
+		73 => x"72727272",
+		74 => x"72727272",
+		75 => x"20202072",
+		76 => x"20202020",
+		77 => x"76767676",
+		78 => x"76767676",
+		79 => x"76767676",
+		80 => x"76767676",
+		81 => x"76767676",
+		82 => x"20207676",
+		83 => x"000a2020",
+		84 => x"20207272",
+		85 => x"20202020",
+		86 => x"20202020",
+		87 => x"20202020",
+		88 => x"76762020",
+		89 => x"76767676",
+		90 => x"76767676",
+		91 => x"76767676",
+		92 => x"76767676",
+		93 => x"76767676",
+		94 => x"20202020",
+		95 => x"000a2020",
+		96 => x"20207272",
+		97 => x"20202020",
+		98 => x"20202020",
+		99 => x"76762020",
+		100 => x"76767676",
+		101 => x"76767676",
+		102 => x"76767676",
+		103 => x"76767676",
+		104 => x"76767676",
+		105 => x"20207676",
+		106 => x"20202020",
+		107 => x"000a7272",
+		108 => x"72727272",
+		109 => x"20202020",
+		110 => x"76762020",
+		111 => x"76767676",
+		112 => x"76767676",
+		113 => x"76767676",
+		114 => x"76767676",
+		115 => x"76767676",
+		116 => x"76767676",
+		117 => x"20202020",
+		118 => x"72722020",
+		119 => x"000a7272",
+		120 => x"72727272",
+		121 => x"20207272",
+		122 => x"20202020",
+		123 => x"76767676",
+		124 => x"76767676",
+		125 => x"76767676",
+		126 => x"76767676",
+		127 => x"76767676",
+		128 => x"20207676",
+		129 => x"20202020",
+		130 => x"72727272",
+		131 => x"000a7272",
+		132 => x"72727272",
+		133 => x"72727272",
+		134 => x"20202020",
+		135 => x"76762020",
+		136 => x"76767676",
+		137 => x"76767676",
+		138 => x"76767676",
+		139 => x"76767676",
+		140 => x"20202020",
+		141 => x"72722020",
+		142 => x"72727272",
+		143 => x"000a7272",
+		144 => x"72727272",
+		145 => x"72727272",
+		146 => x"20207272",
+		147 => x"20202020",
+		148 => x"76767676",
+		149 => x"76767676",
+		150 => x"76767676",
+		151 => x"20207676",
+		152 => x"20202020",
+		153 => x"72727272",
+		154 => x"72727272",
+		155 => x"000a7272",
+		156 => x"72727272",
+		157 => x"72727272",
+		158 => x"72727272",
+		159 => x"20202020",
+		160 => x"76762020",
+		161 => x"76767676",
+		162 => x"76767676",
+		163 => x"20202020",
+		164 => x"72722020",
+		165 => x"72727272",
+		166 => x"72727272",
+		167 => x"000a7272",
+		168 => x"72727272",
+		169 => x"72727272",
+		170 => x"72727272",
+		171 => x"20207272",
+		172 => x"20202020",
+		173 => x"76767676",
+		174 => x"20207676",
+		175 => x"20202020",
+		176 => x"72727272",
+		177 => x"72727272",
+		178 => x"72727272",
+		179 => x"000a7272",
+		180 => x"72727272",
+		181 => x"72727272",
+		182 => x"72727272",
+		183 => x"72727272",
+		184 => x"20202020",
+		185 => x"76762020",
+		186 => x"20202020",
+		187 => x"72722020",
+		188 => x"72727272",
+		189 => x"72727272",
+		190 => x"72727272",
+		191 => x"000a7272",
+		192 => x"72727272",
+		193 => x"72727272",
+		194 => x"72727272",
+		195 => x"72727272",
+		196 => x"20207272",
+		197 => x"20202020",
+		198 => x"20202020",
+		199 => x"72727272",
+		200 => x"72727272",
+		201 => x"72727272",
+		202 => x"72727272",
+		203 => x"000a7272",
+		204 => x"72727272",
+		205 => x"72727272",
+		206 => x"72727272",
+		207 => x"72727272",
+		208 => x"72727272",
+		209 => x"20202020",
+		210 => x"72722020",
+		211 => x"72727272",
+		212 => x"72727272",
+		213 => x"72727272",
+		214 => x"72727272",
+		215 => x"000a7272",
+		216 => x"72727272",
+		217 => x"72727272",
+		218 => x"72727272",
+		219 => x"72727272",
+		220 => x"72727272",
+		221 => x"20207272",
+		222 => x"72727272",
+		223 => x"72727272",
+		224 => x"72727272",
+		225 => x"72727272",
+		226 => x"72727272",
+		227 => x"000a7272",
+		228 => x"6974203e",
+		229 => x"3a20656d",
+		230 => x"00000020",
+		231 => x"6e69203e",
+		232 => x"3a206e73",
+		233 => x"00000020",
+		234 => x"33323130",
+		235 => x"37363534",
+		236 => x"42413938",
+		237 => x"46454443",
+		others => x"00000000"
+	);
 
-   SIGNAL memory : ram_type := InitRomFromFile( RAM_FILE );
-   SIGNAL R_ADDR : STD_LOGIC_VECTOR(RAM_ADDR-2-1 DOWNTO 0); -- -2 bits because 32b words and not bytes
+	SIGNAL R_ADDR : STD_LOGIC_VECTOR(RAM_ADDR-2-1 DOWNTO 0); -- -2 bits because 32b words and not bytes
 
 begin
 
-   --
-   --
-   --
-   --
-   --
-   --
-   --
-   --
-   --
+	R_ADDR <= ADDR_RW(RAM_ADDR-1 DOWNTO 2); -- -2 bits because 32b words and not bytes
+
+	PROCESS (CLOCK)
+	BEGIN
+		IF (CLOCK'event AND CLOCK = '1') THEN
+			if ENABLE = '1' then
+				DATA_R <= memory( to_integer(UNSIGNED(R_ADDR)) );
+			end if;
+		END IF;
+	END PROCESS;
+
+	process(CLOCK)
+		VARIABLE addr : integer;
+	begin
+		if rising_edge(CLOCK) then
+			if ENABLE = '1' then
+				addr := TO_INTEGER( unsigned(R_ADDR) );
+				if WRITE_M(0) = '1' then memory( addr )( 7 downto  0) <= DATA_W( 7 downto  0); end if;
+				if WRITE_M(1) = '1' then memory( addr )(15 downto  8) <= DATA_W(15 downto  8); end if;
+				if WRITE_M(2) = '1' then memory( addr )(23 downto 16) <= DATA_W(23 downto 16); end if;
+				if WRITE_M(3) = '1' then memory( addr )(31 downto 24) <= DATA_W(31 downto 24); end if;
+			end if;
+		end if;
+	end process;
 
 end arch;
- 

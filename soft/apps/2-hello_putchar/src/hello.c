@@ -4,7 +4,7 @@
  * 
 */
 
-inline int putchar(const int c)
+inline int my_putchar(const int c)
 {
    volatile unsigned int* uart_ou = (unsigned int*)0x06000000;
    ( *uart_ou ) = c;                            // on envoie le char
@@ -26,12 +26,12 @@ inline void led_rgb_set_green()
 void start() // no main => start is called BEFORE main. It avoid boot sequence !
 {
    led_rgb_set_green();
-   putchar('H');
-   putchar('e');
-   putchar('l');
-   putchar('l');
-   putchar('o');
-   putchar('\n');
+   my_putchar('H');
+   my_putchar('e');
+   my_putchar('l');
+   my_putchar('l');
+   my_putchar('o');
+   my_putchar('\n');
    led_rgb_set_red();
    asm volatile("ebreak");
    while( 1 );

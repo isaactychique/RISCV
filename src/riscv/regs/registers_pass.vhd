@@ -49,15 +49,46 @@ architecture arch of registers_pass is
 
 begin
 
+   process(CLOCK)
+        VARIABLE addr : integer;   
+   begin
+     if rising_edge(CLOCK) then
+        b_RS1_id   <= RS1_id;
+        b_RS2_id   <= RS2_id;
+        b_RD_id    <= RD_id;
+        b_RD_id_we <= RD_id_we;
+        b_DATA_rd  <= DATA_rd;
+     end if;
+   end process;
+
+   process(CLOCK)
+        VARIABLE addr : integer;   
+   begin
+     if rising_edge(CLOCK) then
+        if RD_id_we = '1' then
+            addr := TO_INTEGER( unsigned(RD_id) );
+            registerFile( addr ) <= DATA_rd;
+        end if;
+     end if;
+   end process;
+   
    --
+   -- DECODAGE COMBINATOIRE DES REGISTRES
    --
-   --
-   --
-   --
-   --
-   --
-   --
-   --
+
+   process(CLOCK)
+        VARIABLE addr : integer;   
+   begin
+     if rising_edge(CLOCK) then
+        if e_hold = '0' then
+            v_rs1 <= registerFile( TO_INTEGER( unsigned( RS1_id ) ) ); --WHEN FD_instr( 19 downto 15) /= "00000" ELSE x"00000000";
+            v_rs2 <= registerFile( TO_INTEGER( unsigned( RS2_id ) ) ); --WHEN FD_instr( 24 downto 20) /= "00000" ELSE x"00000000";
+        end if;
+     end if;
+   end process;
+   
+   DATA_rs1 <= b_DATA_rd when (b_RS1_id = b_RD_id) AND (b_RD_id_we = '1') else v_rs1;
+   DATA_rs2 <= b_DATA_rd when (b_RS2_id = b_RD_id) AND (b_RD_id_we = '1') else v_rs2;
    
 end arch;
  

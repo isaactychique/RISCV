@@ -23,16 +23,16 @@ architecture bench of fetch_tb is
    );
   end component;
 
-  signal CLK: STD_LOGIC;
-  signal resetn: STD_LOGIC;
-  signal enable_f: STD_LOGIC;
-  signal enable_m: STD_LOGIC;
-  signal jumpOrBranchAddress: STD_LOGIC_VECTOR (31 downto 0);
-  signal jumpOrBranch: STD_LOGIC;
-  signal pc_value: STD_LOGIC_VECTOR (31 downto 0) ;
+  signal CLK: STD_LOGIC := '0';
+  signal resetn: STD_LOGIC := '0';
+  signal enable_f: STD_LOGIC := '0';
+  signal enable_m: STD_LOGIC  := '0';
+  signal jumpOrBranchAddress: STD_LOGIC_VECTOR (31 downto 0) := (others =>'0');
+  signal jumpOrBranch: STD_LOGIC := '0';
+  signal pc_value: STD_LOGIC_VECTOR (31 downto 0) := (others =>'0');
 
   constant clock_period: time := 10 ns;
-  signal stop_the_clock: boolean;
+  signal stop_the_clock: boolean := false;
 
 begin
 
@@ -48,9 +48,35 @@ begin
   begin
   
     -- Put initialisation code here
-
+    resetn <= '0'; 
+    enable_f <= '0'; 
+    wait for 20 ns;
 
     -- Put test bench stimulus code here
+
+    -- On commence pour les cas classiques. Les instructions simples
+    resetn <= '1'; 
+    enable_f <= '1'; 
+    wait for 40 ns;
+
+    wait for 60 ns; 
+
+    -- Lorsqu'on reçoit une instruction de type jump ou branch 
+    jumpOrBranch <= '1' ; 
+    jumpOrBranchAddress <= x"00000020"; 
+    wait for 10 ns; 
+
+    -- On n'est plus dans le cas du branchement ici. 
+
+    jumpOrBranch <= '0'; 
+    wait for 40 ns; 
+
+    -- On fait un test stall 
+    enable_f <= '0'; ---  Globalement on est bloqué
+    wait for 40 ns; 
+
+    enable_f <= '1' ; 
+    wait for 40 ns; 
 
     stop_the_clock <= true;
     wait;

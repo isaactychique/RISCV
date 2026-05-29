@@ -1,20 +1,14 @@
 #
 #
 #
-#
 ########################################################################################################################
-#
 #
 #
 #
 all: alu_sim
 #
 #
-#
-#
 ########################################################################################################################
-#
-#
 #
 #
 alu_sim:
@@ -63,6 +57,26 @@ decoder_sim:
 #
 ########################################################################################################################
 #
+
+
+decoder_5stg_sim:
+	# Nettoyage des anciens fichiers
+	find . -name "work-obj08.cf" -delete
+	find . -name "*.o"           -delete
+
+	# Analyse des codes VHDL
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/riscv_types.vhd
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/decode/decoder_5stg.vhd
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/decode/decoder_5stg_tb.vhd
+
+	# Elaboration du modele simulable
+	ghdl -e --std=08 -frelaxed decoder_5stg_tb
+
+	# Simulation du modele
+	ghdl -r --std=08 -frelaxed decoder_5stg_tb --wave=trace.ghw --ieee-asserts=disable --max-stack-alloc=0
+#
+
+
 #
 #
 #
@@ -228,11 +242,33 @@ regs_sim:
 	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/regs/registers.vhd
 	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/regs/registers_tb.vhd
 
+
 	# Elaboration du modele simulable
 	ghdl -e --std=08 -frelaxed registers_tb
 
+
 	# Simulation du modele
 	ghdl -r --std=08 -frelaxed registers_tb --wave=trace.ghw --ieee-asserts=disable --max-stack-alloc=0
+
+
+
+regs_pass_simu:
+	# Nettoyage des anciens fichiers
+	find . -name "work-obj08.cf" -delete
+	find . -name "*.o"           -delete
+
+	# Analyse des codes VHDL
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/riscv_types.vhd
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/regs/registers_pass_pkg.vhd
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/regs/registers_pass.vhd
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/regs/registers_pass_tb.vhd
+
+	# Elaboration du modele simulable
+	ghdl -e --std=08 -frelaxed registers_pass_tb
+
+	# Simulation du modele
+	ghdl -r --std=08 -frelaxed registers_pass_tb --wave=trace.ghw --ieee-asserts=disable --max-stack-alloc=0
+	
 #
 #
 #
@@ -247,17 +283,17 @@ rom_sim:
 	find . -name "work-obj08.cf" -delete
 	find . -name "*.o"           -delete
 
-# Analyse des codes VHDL
-#	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/riscv_types.vhd
-#	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/rom/mem_rom_pkg.vhd
-#	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/rom/mem_rom.vhd
-#	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../testbench/mem_rom_tb.vhd
+	# Analyse des codes VHDL
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/riscv_types.vhd
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/rom/mem_rom_pkg.vhd
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../src/riscv/rom/mem_rom.vhd
+	ghdl -a --std=08 -fsynopsys -Wno-hide -Wno-shared -frelaxed ../testbench/mem_rom_tb.vhd
 
-# Elaboration du modele simulable
-#	ghdl -e --std=08 -frelaxed mem_rom_tb
+	# Elaboration du modele simulable
+	ghdl -e --std=08 -frelaxed mem_rom_tb
 
-# Simulation du modele
-#	ghdl -r --std=08 -frelaxed mem_rom_tb --wave=trace.ghw --ieee-asserts=disable --max-stack-alloc=0
+	# Simulation du modele
+	ghdl -r --std=08 -frelaxed mem_rom_tb --wave=trace.ghw --ieee-asserts=disable --max-stack-alloc=0
 #
 #
 #
@@ -495,7 +531,8 @@ riscv_cmod:
 	find . -name "*.o"           -delete
 
 	# Simulation du modele RTL
-	ghdl -r --std=08 -frelaxed riscv_soc_tb --ieee-asserts=disable --max-stack-alloc=0 --wave=riscv_soc_tb.ghw
+	#ghdl -r --std=08 -frelaxed riscv_soc_tb --ieee-asserts=disable --max-stack-alloc=0 --wave=riscv_soc_tb.ghw
+	ghdl -r --std=08 -frelaxed riscv_soc_tb --ieee-asserts=disable --max-stack-alloc=0
 #
 #
 #
@@ -701,7 +738,8 @@ riscv_altera:
 	find . -name "*.o"           -delete
 
 	# Simulation du modele RTL
-	ghdl -r --std=08 -frelaxed riscv_soc_tb --ieee-asserts=disable --max-stack-alloc=0 --wave=riscv_soc_tb.ghw
+	ghdl -r --std=08 -frelaxed riscv_soc_tb --ieee-asserts=disable --max-stack-alloc=0 
+	#--wave=riscv_soc_tb.ghw
 #
 #
 #

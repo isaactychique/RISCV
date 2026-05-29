@@ -15,19 +15,35 @@ entity mem_store is
      );
 end mem_store;
 
-
 architecture arch of mem_store is
+    signal shift_val : integer range 0 to 3;
 
 begin
 
-   --
-   --
-   --
-   --
-   --
-   --
-   --
-   --
-   --
-   
+    -- Calcul du shift à partir des 2 bits de poids faible de l'adresse
+    shift_val <= to_integer(unsigned(ADDR_W));
+
+ -- Remplacez process(all) par la liste des signaux lus
+    process(is_byte, is_half, DATA_W, ADDR_W, shift_val) 
+    begin
+        if is_byte = '1' then
+            data_value <= std_logic_vector(shift_left(resize(unsigned(DATA_W(7 downto 0)), 32), shift_val * 8));
+        elsif is_half = '1' then
+            data_value <= std_logic_vector(shift_left(resize(unsigned(DATA_W(15 downto 0)), 32), to_integer(unsigned(ADDR_W(1 downto 1))) * 16));
+        else
+            data_value <= DATA_W;
+        end if;
+    end process;
+
+
+    -- Génération du masque d'écriture (Byte Enable)
+    data_mask <= 
+        "0001" when (is_byte='1' and ADDR_W="00") else
+        "0010" when (is_byte='1' and ADDR_W="01") else
+        "0100" when (is_byte='1' and ADDR_W="10") else
+        "1000" when (is_byte='1' and ADDR_W="11") else
+        "0011" when (is_half='1' and ADDR_W(1)='0') else
+        "1100" when (is_half='1' and ADDR_W(1)='1') else
+        "1111";
+
 end arch;

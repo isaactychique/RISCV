@@ -1,6 +1,6 @@
 #export PATH="/opt/homebrew/opt/llvm@19/bin:$PATH"
 
-RV_GCC=/opt/homebrew/opt/llvm@19/bin/clang
+RV_GCC=/usr/bin/clang-20
 RV_AS=riscv64-linux-gnu-as
 RV_AR=riscv64-linux-gnu-ar
 RV_LD=riscv64-linux-gnu-ld
